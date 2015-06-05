@@ -40,6 +40,10 @@ COPY cabal.config .
 RUN cabal install alex happy
 RUN apt-get install -y libgl1-mesa-dev libglu1-mesa-dev
 RUN apt-get install -y freeglut3 freeglut3-dev
+RUN apt-get install -y libgtk2.0-dev
+RUN apt-get install -y libpango1.0-dev
+RUN apt-get install -y libcairo2-dev
+RUN apt-get install -y libglib2.0-dev
 
 # -----------------------------------------------------------------------------
 
@@ -48,6 +52,15 @@ COPY Setup.hs       .
 COPY src            .
 
 RUN cabal install --dependencies-only
+
+RUN cabal install gtk2hs-buildtools
+RUN cabal install threadscope
+RUN cabal install profiteur
+RUN cabal install parallel
+RUN cabal install monad-par
+# RUN cabal install ghc-vis
+# RUN cabal install ghc-events-analyze --allow-newer
+
 
 # -------- mount the command line directory here
 WORKDIR /root/work
